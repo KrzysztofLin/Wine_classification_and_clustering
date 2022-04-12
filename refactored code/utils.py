@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+from typing import Tuple
 
 
 def nan_data_counter(data: pd.DataFrame) -> None:
@@ -9,8 +10,7 @@ def nan_data_counter(data: pd.DataFrame) -> None:
     print(nulls_summary)
 
 
-def independent_and_dependent_variables_generator(data: pd.DataFrame, dependent_variable_col_num: int) -> [int, pd.DataFrame,
-                                                                                             pd.DataFrame]:
+def independent_and_dependent_variables_generator(data: pd.DataFrame, dependent_variable_col_num: int) -> Tuple[int, str, str]:
     x = list(range(0, data.shape[1]))
     x.remove(dependent_variable_col_num)
     independent_variables_col_num = x
@@ -42,15 +42,16 @@ def boudaries(data: pd.DataFrame) -> pd.DataFrame:
     return outliers_15iqr
 
 
-def data_standarization(data_train: pd.DataFrame, data_test: pd.DataFrame, independent_variable_col_num: int, dependent_variable_col_num: int):
+def data_standarization(data_train: pd.DataFrame, data_test: pd.DataFrame, independent_variable_col_num: int, dependent_variable_col_num: int) -> \
+Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     scaler = MinMaxScaler()
     scaler.fit(data_train)
     data_train_norm = scaler.transform(data_train)
     data_test_norm = scaler.transform(data_test)
-    X_train_norm = data_train_norm[:, independent_variable_col_num]
-    X_test_norm = data_test_norm[:, independent_variable_col_num]
+    x_train_norm = data_train_norm[:, independent_variable_col_num]
+    x_test_norm = data_test_norm[:, independent_variable_col_num]
     y_train_norm = data_train_norm[:, dependent_variable_col_num]
-    return X_train_norm, X_test_norm, y_train_norm
+    return x_train_norm, x_test_norm, y_train_norm
 
 
 def file_safer(filename: str, file: str) -> None:
