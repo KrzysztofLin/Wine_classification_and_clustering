@@ -57,7 +57,6 @@ def main():
     # DATA ESTIMATION
     classification_and_estimation.mlp_estimation(random_seed, perceptor_num=perceptor_num)
 
-
     # DATA CLUSTERIZATION
     clustering_data_using_kmeans(data_train, data_test, y_test, independent_variables, random_seed)
 
