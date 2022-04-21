@@ -4,7 +4,7 @@ from utils import independent_and_dependent_variables_generator, data_standariza
 from data_visualization_v2 import correlation_graph_generator, dispersion_graph_generator, histogram_generator
 from data_classification import ClassificationAndEstimation
 from data_clusterization import clustering_data_using_kmeans, silhouette_score
-PATH = "C:\\Users\\Krzychiu\\Documents\\Analiza_danych_studia\\1 semestr\\ED\\KL_projekt_zaliczeniowy\\refactored code"
+PATH = "~/src" # insert your path to folder 
 
 
 def main():
