@@ -10,6 +10,7 @@ The collection was compiled as the result of measurements carried out from May 2
 
 # How to use program?
 To run the program use: main_wine_file.py. The main program calls the functions defined in the other files, contains all methods needed to experimate on date and print some statistics with graphs (histograms, dispersion graph, correleation matrix). 
+
 The main file can be modified depending on your needs. The program is suited for white_wine_dataset.csv, however it can be modified and used in diffrent datasets (only the independent variables and dependent variable should be pointed).
 
 # The program structure
