@@ -26,6 +26,8 @@ The application is created of 5 files:
 - Python
 - Pandas
 - Sklearn
+
+# Used metodolgies
 - Matplotlib
 - Seaborn
 - Typing
