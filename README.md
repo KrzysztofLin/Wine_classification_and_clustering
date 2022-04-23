@@ -4,12 +4,17 @@ Classification, estimation and clustering the quality of White Wine using Machin
 # The goal
 The aim of the programme was to test (and select) various classification, estimation and clustering methods in order to predict, on the basis of the predictors, the quality of wine with the highest possible accuracy. 
 
+# Setup 
+1. Git clone repository.
+2. To run the program install dependencies from poetry file, by "poetry log/ poetry install"
+3. Run main_wine_file.py.
+
 # About dataset
 The file winequality-white.csv contains data on 4898 samples of Portuguese white wine. Each sample is described by 12 parameters, of which parameters 1-11 are assessed by objective physico-chemical tests and parameter 12 is a subjective assessment of wine quality made by experts.
 The collection was compiled as the result of measurements carried out from May 2004 to February 2007 on samples approved by the official certification association - CVRVV (association aiming to improve quality and promote Portuguese vino verde).
 
 # How to use program?
-To run the program use: main_wine_file.py. The main program calls the functions defined in the other files, contains all methods needed to experimate on date and print some statistics with graphs (histograms, dispersion graph, correleation matrix). 
+The main program calls the functions defined in the other files, contains all methods needed to experimate on date and print some statistics with graphs (histograms, dispersion graph, correleation matrix). 
 
 The main file can be modified depending on your needs. The program is suited for white_wine_dataset.csv, however it can be modified and used in diffrent datasets (only the independent variables and dependent variable should be pointed).
 
