@@ -7,7 +7,10 @@ from sklearn.model_selection import ParameterGrid
 from scipy import stats
 from utils import file_safer
 from data_visualization_v2 import graph_for_kmeans_result, dispersion_graph_generator, dispersion_graph_3D
-
+import black
+import isort
+import mypy
+import flake8
 
 def clustering_data_using_kmeans(data_train: pd.DataFrame, y_train: pd.Series, independent_variables: pd.Index, random_seed: int) -> None:
     predictors = stats.zscore(np.log(data_train[independent_variables] + 1))
@@ -19,6 +22,10 @@ def clustering_data_using_kmeans(data_train: pd.DataFrame, y_train: pd.Series, i
     dispersion_graph_3D(predictors, column_name_1 = 'citric acid', column_name_2 = 'total sulfur dioxide', column_name_3 = 'chlorides')
 
     # for 2 clusters
+    kmeans_cluster_params = {
+        'n_clustesr' : 2,
+
+    }
     kmeans_cluster_description(predictors, n_clusters=2, init='random', n_init=10, max_iter=300, tol=1e-04, random_state=random_seed)
 
     # for 6 clusters
@@ -44,7 +51,7 @@ def silhouette_score(data_train: pd.DataFrame) -> plt.figure:
     plt.show()
 
 
-def kmeans_cluster_description(predictors: pd.DataFrame, n_clusters: int, init, n_init: str, max_iter: int, tol: float, random_state:int):
+def kmeans_cluster_description(predictors: pd.DataFrame, *args, **kwargs n_clusters: int, init, n_init: str, max_iter: int, tol: float, random_state:int):
     kmeans_algorithm = KMeans(n_clusters=n_clusters, init=init, n_init=n_init, max_iter=max_iter, tol=tol, random_state=random_state)
     cluster = kmeans_algorithm.fit(predictors).labels_
     cluster_description = []

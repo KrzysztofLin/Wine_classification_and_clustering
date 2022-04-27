@@ -7,18 +7,21 @@ from data_clusterization import clustering_data_using_kmeans, silhouette_score
 PATH = "C:\\Users\\Krzychiu\\Documents\\Analiza_danych_studia\\1 semestr\\ED\\KL_projekt_zaliczeniowy\\refactored code"
 
 
-def main():
+def main(*args, **kwargs):
     ''' DATA ANALYSIS AND PREPARATION  '''
     data = pd.read_csv(f"{PATH}\\winequality-white.csv", sep=';')
     random_seed = 123
     pd.set_option('display.max_columns', 12)
     # nan_data_counter(data) # check number of NaN
-
     # Choice of independent and dependent variables, in case of wine-data set, the dependent value is quality (11 column)
     dependent_variable_col_num = 11
+    #data = get_data(PATH_TO_WINE_DATA)
+    # x, y = data
+    #indexer = get_indexer()
     independent_variables_col_num, dependent_variable, independent_variables = independent_and_dependent_variables_generator(
         data, dependent_variable_col_num)
-
+    if kwargs["show_plots"]:
+        pass
     # Generation of the plots
 #    correlation_graph_generator(data, filename_cor="Correlation_graph.png")
 #    dispersion_graph_generator(data, independent_variables, dependent_variable, filename_disp="Dispersion_graph.png")
@@ -29,12 +32,17 @@ def main():
     dependent_variable_col_num = 9
     independent_variables_col_num, dependent_variable, independent_variables = independent_and_dependent_variables_generator(
         data, dependent_variable_col_num)
-    data = data_outliers_remover(data)  # function to remove outliers
+    data = remove_outilered_data(data)  # function to remove outliers
 
 #    correlation_graph_generator(data, filename_cor="Modified_correlation_graph.png")
-#    histogram_generator(data)
-
+    # #    histogram_generator(data)
+    # load data
+    # 1. Load data from file
+    # 2. Select data
+    # 3. Split data
+    # 4. Preprocess data
     # train test split and data standardization
+    # PREPROCESS DATA
     data_train, data_test = train_test_split(data, test_size=0.25, random_state=random_seed)
     y_test = data_test[dependent_variable]
     y_train = data_train[dependent_variable]

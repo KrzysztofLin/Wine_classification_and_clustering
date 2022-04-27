@@ -6,8 +6,40 @@ from sklearn.neural_network import MLPRegressor, MLPClassifier
 from sklearn.metrics import mean_absolute_error
 from sklearn.neighbors import KNeighborsClassifier
 from data_visualization_v2 import final_plot
+import abc
 
+class PipelineAbstract(abc.ABC):
+    def load_data(self, dataLoader):
+        pass
+    def preprocess_data(self):
+        pass
+    def train_model(self, model, Trainer):
+        pass
+    def evaluate_data(self, model, data):
+        pass
 
+Modeltrainer.train_model(data, model= KNN, model_trainer= Classificator )
+
+Modeltrainer.train_model(data, model =  MLP, model_trainer= Estymator )
+
+class TrainModelAbstract(abc.ABC):
+    @abc.abstractmethod
+    def fit(self, data, model):
+        pass
+
+class EvaluateModelAbstract(abc.ABC):
+    @abc.abstractmethod
+    def evaluate(self, data, model):
+        pass
+
+class ModelTrain(TrainModelAbstract):
+    def train_model(self, data, model_trainer = KNeighborsClassifier(n_neighbors=2, weights="distance"), params = ):
+       model_trainer.fit(data[1], data[2])
+
+class Classificator(EvaluateModelAbstract):
+    pass
+class Estimator(TrainModelAbstract):
+    pass
 class ClassificationAndEstimation:
     def __init__(self, y_test: pd.Series, y_train: pd.Series, x_train_norm: np.ndarray, x_test_norm: np.ndarray, y_train_norm: np.ndarray):
         self.y_test = y_test
@@ -29,7 +61,9 @@ class ClassificationAndEstimation:
 
         y_predicted_train = knn_best.predict(self.x_train_norm)
         y_predicted_test = knn_best.predict(self.x_test_norm)
-        accuracy_on_train_and_test_set(self.y_train, y_predicted_train, self.y_test, y_predicted_test, name="knn_classifier")
+        accuracy(self.y_train, y_predicted_train")
+        accuracy(self.y_test, y_predicted_test )
+        final_plot( name="knn_classifier", y_test, y_predicted_test)
 
     def knn_classification(self) -> None:
         print("KNN - classification")
@@ -77,13 +111,10 @@ def denormalization(y_predicted: np.ndarray, y_actual: pd.Series) -> np.ndarray:
     return y_predicted_denor
 
 
-def accuracy_on_train_and_test_set(y_train: pd.Series, y_predicted_train:List[float], y_test: pd.Series, y_predicted_test: List[float], name: str) -> None:
-    print(type(y_train), type(y_predicted_train), type(y_predicted_test), type(y_test), type(name))
-    print(f"MAE for train set {round(mean_absolute_error(y_train, y_predicted_train), 4)}")
-    print(f"MAE for test set {round(mean_absolute_error(y_test, y_predicted_test), 4)}")
+def accuracy(y_train: pd.Series, y_predicted_train:List[float]) -> None:
+    print(type(y_train), type(y_predicted_train))
+    print(f"MAE for set {round(mean_absolute_error(y_train, y_predicted_train), 4)}")
     accuracy_calculator(y_train, y_predicted_train)
-    accuracy_calculator(y_test, y_predicted_test)
-    final_plot(name, y_test, y_predicted_test)
 
 
 def accuracy_calculator(y_actual: pd.Series, y_predicted: np.ndarray) -> None:
