@@ -6,10 +6,8 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import GridSearchCV
 
-from settings import (
-    CLASSIFICATION_ALGORITHMS_AND_PARAMETERS,
-    ESTIMATION_ALGORITHMS_AND_PARAMETERS,
-)
+from settings import (CLASSIFICATION_ALGORITHMS_AND_PARAMETERS,
+                      ESTIMATION_ALGORITHMS_AND_PARAMETERS)
 
 
 def classify_data(data_subsets):

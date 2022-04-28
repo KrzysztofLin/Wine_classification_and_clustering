@@ -8,17 +8,13 @@ from sklearn import metrics
 from sklearn.cluster import KMeans
 from sklearn.model_selection import ParameterGrid
 
-from data_visualization_v2 import (
-    plot_3D_dispersion_graph,
-    plot_dispersion_graphs,
-    plot_kmeans_result_graph,
-)
-from settings import (
-    CLUSERIZATOR_WITH_PARAMETERS,
-    COLUMN_NAMES_CLUSTERIZATION_3D_DISPERSION_GRAPH,
-    COLUMN_NAMES_CLUSTERIZATION_DISPERSION_GRAPH,
-    X_COLUMNS_NAMES,
-)
+from data_visualization_v2 import (plot_3D_dispersion_graph,
+                                   plot_dispersion_graphs,
+                                   plot_kmeans_result_graph)
+from settings import (CLUSERIZATOR_WITH_PARAMETERS,
+                      COLUMN_NAMES_CLUSTERIZATION_3D_DISPERSION_GRAPH,
+                      COLUMN_NAMES_CLUSTERIZATION_DISPERSION_GRAPH,
+                      X_COLUMNS_NAMES)
 from utils import save_file
 
 

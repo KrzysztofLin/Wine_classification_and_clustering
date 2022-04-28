@@ -2,7 +2,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from settings import RANDOM_SEED, TEST_SIZE, X_COLUMNS_NAMES, Y_COLUMN_NAME
-from utils import remove_outlier_data, standardize_test_set, standardize_train_set
+from utils import (remove_outlier_data, standardize_test_set,
+                   standardize_train_set)
 
 
 def preprocess_data(data: pd.DataFrame):
