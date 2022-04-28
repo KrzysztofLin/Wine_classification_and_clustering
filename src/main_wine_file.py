@@ -12,8 +12,8 @@ def main():
     # check_data_correctness(data)
     data = explore_data(data)
     data_subsets = preprocess_data(data)
-    # classify_data(data_subsets)
-    estimate_data(data_subsets)
+    classify_data(data_subsets)
+    # estimate_data(data_subsets)
     # explore_data_clusterization(data_subsets)
     # cluster_data(data_subsets)
 

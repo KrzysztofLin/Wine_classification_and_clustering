@@ -2,7 +2,6 @@ from typing import Any, Tuple
 
 import pandas as pd
 
-from data_loader import load_data
 from data_visualization_v2 import (plot_correlation_graph,
                                    plot_dispersion_graphs, plot_histograms)
 from settings import X_COLUMNS_NAMES, Y_COLUMN_NAME
@@ -22,7 +21,3 @@ def explore_data(data: pd.DataFrame, save_plots=False) -> Tuple[Any, int]:
         plot_histograms(data)
 
     return data
-
-
-# data = load_data()
-# explore_data(data)

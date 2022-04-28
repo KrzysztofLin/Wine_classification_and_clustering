@@ -6,8 +6,9 @@ The aim of the programme was to test (and select) various classification, estima
 
 # Setup 
 1. Git clone repository.
-2. To run the program install dependencies from poetry file, by "poetry log/ poetry install"
-3. Run main_wine_file.py.
+2. To install all nessesary dependecies type 'poetry install' 
+3. To run the program type 'poetry run python main_wine_file.py'
+
 
 # About dataset
 The file winequality-white.csv contains data on 4898 samples of Portuguese white wine. Each sample is described by 12 parameters, of which parameters 1-11 are assessed by objective physico-chemical tests and parameter 12 is a subjective assessment of wine quality made by experts.

@@ -14,7 +14,7 @@ def classify_data(data_subsets):
     for algorithm, parameters in CLASSIFICATION_ALGORITHMS_AND_PARAMETERS.items():
         algorithm_with_best_parameters = FindBestHyperparameters(
             data_subsets
-        ).crossvalidation(algorithm, parameters)
+        ).crossvalidate(algorithm, parameters)
         Classification(data_subsets).evaluate(algorithm_with_best_parameters)
 
 
@@ -22,7 +22,7 @@ def estimate_data(data_subsets):
     for algorithm, parameters in ESTIMATION_ALGORITHMS_AND_PARAMETERS.items():
         algorithm_with_best_parameters = FindBestHyperparameters(
             data_subsets
-        ).crossvalidation(algorithm, parameters)
+        ).crossvalidate(algorithm, parameters)
         Classification(data_subsets).evaluate(algorithm_with_best_parameters)
 
 
