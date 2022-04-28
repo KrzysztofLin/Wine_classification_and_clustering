@@ -6,7 +6,7 @@ from data_visualization_v2 import plot_correlation_graph, plot_dispersion_graphs
 
 
 def explore_data(data: pd.DataFrame, save_plots = False) -> Tuple[Any, int]:
-    all_data_columns_names = X_COLUMNS_NAMES
+    all_data_columns_names = X_COLUMNS_NAMES.copy()
     all_data_columns_names.append(Y_COLUMN_NAME)
 
     data = data[all_data_columns_names]

@@ -3,6 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import matplotlib.cm as cm
+from typing import List
 
 
 def plot_correlation_graph(data: pd.DataFrame, filename_cor: str) -> plt.figure:
@@ -14,8 +15,8 @@ def plot_correlation_graph(data: pd.DataFrame, filename_cor: str) -> plt.figure:
     plt.savefig(filename_cor)
 
 
-def plot_dispersion_graphs(data: pd.DataFrame, independent_variables: str, dependent_variable: str, filename_disp: str) -> plt.figure:
-    sns.pairplot(data, x_vars=independent_variables, y_vars=dependent_variable, diag_kind=None)
+def plot_dispersion_graphs(data: pd.DataFrame, x_column_names: List[str], y_column_names: str, filename_disp: str) -> plt.figure:
+    sns.pairplot(data, x_vars=x_column_names, y_vars=y_column_names, diag_kind=None)
     plt.tight_layout()
     plt.savefig(filename_disp)
 
@@ -37,12 +38,12 @@ def plot_actual_vs_predicted_values_graph(name: str, y_actual: pd.Series, y_pred
     plt.savefig(f"{name} Graph of actual vs predicted values.png")
 
 
-def plot_3D_dispersion_graph(predictors, column_name_1: str, column_name_2, column_name_3) -> plt.figure:
+def plot_3D_dispersion_graph(predictors, columns_names) -> plt.figure:
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    x = np.array(predictors[column_name_1])
-    y = np.array(predictors[column_name_2])
-    z = np.array(predictors[column_name_3])
+    x = np.array(predictors[columns_names[0]])
+    y = np.array(predictors[columns_names[1]])
+    z = np.array(predictors[columns_names[2]])
     ax.scatter(x, y, z, c='r', marker='o')
     plt.show()
 
@@ -55,5 +56,5 @@ def plot_kmeans_result_graph(clusters, y):
     ag.columns = ag.columns.droplevel()
     ag.plot(kind='bar', colormap=cm.Accent, width=1)
     plt.legend(loc='upper center')
-    plt.savefig("Comparation of clustering quality")
+    plt.savefig("Comparation of clustering quality.png")
 

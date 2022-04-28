@@ -4,39 +4,52 @@ from typing import List
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import mean_absolute_error
 from data_visualization_v2 import plot_actual_vs_predicted_values_graph
+from settings import CLASSIFICATION_ALGORITHMS_AND_PARAMETERS, ESTIMATION_ALGORITHMS_AND_PARAMETERS
 import abc
+
+
+def classify_data(data_subsets):
+    for algorithm, parameters in CLASSIFICATION_ALGORITHMS_AND_PARAMETERS.items():
+        algorithm_with_best_parameters = FindBestHyperparameters(data_subsets).crossvalidation(algorithm, parameters)
+        Classification(data_subsets).evaluate(algorithm_with_best_parameters)
+
+
+def estimate_data(data_subsets):
+    for algorithm, parameters in ESTIMATION_ALGORITHMS_AND_PARAMETERS.items():
+        algorithm_with_best_parameters = FindBestHyperparameters(data_subsets).crossvalidation(algorithm, parameters)
+        Classification(data_subsets).evaluate(algorithm_with_best_parameters)
+
 
 class FindBestHyperparametersAbstract(abc.ABC):
     @abc.abstractmethod
-    def crossvalidation(self, y_train, x_train_norm, y_train_norm, algorithm, parameters):
+    def crossvalidate(self, algorithm, parameters):
         pass
 
 
 class EvaluateModelAbstract(abc.ABC):
     @abc.abstractmethod
-    def evaluate(self, data, model):
+    def evaluate(self, algorithm_with_best_parameters):
         pass
 
 
 class FindBestHyperparameters(FindBestHyperparametersAbstract):
-    def __init__(self, y_train: pd.Series, x_train_norm: np.ndarray, y_train_norm: np.ndarray):
-        self.y_train = y_train
-        self.y_train_norm = y_train_norm
-        self.x_train_norm = x_train_norm
+    def __init__(self, data_subsets):
+        self.x_train_norm = data_subsets['x_train_norm']
+        self.y_train = data_subsets['y_train']
 
-    def crossvalidation(self, algorithm, parameters) -> None:
-        classifier = GridSearchCV(algorithm, parameters, cv=5, n_jobs=-1)
+    def crossvalidate(self, algorithm, parameters) -> None:
+        classifier = GridSearchCV(algorithm, parameters, cv=4, n_jobs=-1)
         classifier.fit(self.x_train_norm, self.y_train)
         print(classifier.best_params_)
         return classifier.best_estimator_
 
 
 class Classification(EvaluateModelAbstract):
-    def __init__(self, y_test: pd.Series, y_train: pd.Series, x_train_norm: np.ndarray, x_test_norm: np.ndarray, y_train_norm: np.ndarray):
-        self.x_train_norm = x_train_norm
-        self.x_test_norm = x_test_norm
-        self.y_test = y_test
-        self.y_train = y_train
+    def __init__(self, data_subsets):
+        self.x_train_norm = data_subsets['x_train_norm']
+        self.x_test_norm = data_subsets['x_test_norm']
+        self.y_test = data_subsets['y_test']
+        self.y_train = data_subsets['y_train']
 
     def evaluate(self, algorithm_with_best_parameters) -> None:
         classifier = algorithm_with_best_parameters
@@ -48,13 +61,11 @@ class Classification(EvaluateModelAbstract):
 
 
 class Estimation(EvaluateModelAbstract):
-    def __init__(self, y_test: pd.Series, y_train: pd.Series, x_train_norm: np.ndarray, x_test_norm: np.ndarray, y_train_norm: np.ndarray):
-        self.y_test = y_test
-        self.y_train = y_train
-        self.y_train_norm = y_train_norm
-        self.x_train_norm = x_train_norm
-        self.x_test_norm = x_test_norm
-
+    def __init__(self, data_subsets):
+        self.y_train_norm = data_subsets['y_train_norm']
+        self.x_train_norm = data_subsets['x_train_norm']
+        self.x_test_norm = data_subsets['x_test_norm']
+        self.y_test = data_subsets['y_test']
 
     def evaluate(self, algorithm_with_best_parameters) -> None:
         estimator = algorithm_with_best_parameters
@@ -88,7 +99,7 @@ def calculate_metrics(y_actual, y_predicted):
             elif i == 1 or i == -1:
                 count_with_extended_interval += 1
         print(f"accuracy for set is equal: {round(count / len(res), 4)}",
-              f"accuracy with extended interval (-1 or 1): {round(count_with_extended_interval  / len(res), 4)}")
+              f"accuracy with extended interval (-1 or 1): {round(count_with_extended_interval / len(res), 4)}")
 
     check_MSE_accuracy(y_actual, y_predicted)
     accuracy_calculator(y_actual, y_predicted)

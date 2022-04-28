@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from typing import Tuple, List
+from typing import List
 
 
 def summarize_nan_values(data: pd.DataFrame) -> None:
@@ -32,15 +32,17 @@ def boudaries(data: pd.DataFrame) -> pd.DataFrame:
     return outliers_15iqr
 
 
-def standardize_train_set(data_train: pd.DataFrame) -> pd.DataFrame:
+def standardize_train_set(data_train: pd.DataFrame, column_names: List[str]) -> pd.DataFrame:
     scaler = MinMaxScaler().fit(data_train.values)
     data_train_norm = scaler.transform(data_train.values)
+    data_train_norm = pd.DataFrame(data_train_norm, columns = column_names)
     return data_train_norm
 
 
-def standardize_test_set(x_train: pd.DataFrame, data_test: pd.DataFrame):
+def standardize_test_set(x_train: pd.DataFrame, data_test: pd.DataFrame, column_names: List[str]) -> pd.DataFrame:
     scaler = MinMaxScaler().fit(x_train.values)
     data_test_norm = scaler.transform(data_test.values)
+    data_test_norm = pd.DataFrame(data_test_norm, columns=column_names)
     return data_test_norm
 
 
