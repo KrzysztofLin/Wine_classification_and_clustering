@@ -31,3 +31,5 @@ The application is created of 5 files:
 - Matplotlib
 - Seaborn
 - Typing
+- Poetry
+- Flake8, Isort, Black, MyPy 
