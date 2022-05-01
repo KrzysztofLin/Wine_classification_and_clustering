@@ -1,4 +1,3 @@
-import abc
 from typing import List
 
 import numpy as np
@@ -8,7 +7,9 @@ from sklearn.model_selection import GridSearchCV
 
 from settings import (CLASSIFICATION_ALGORITHMS_AND_PARAMETERS,
                       ESTIMATION_ALGORITHMS_AND_PARAMETERS)
+from abstract import EvaluateModelAbstract
 
+### tutaj musze uproscic zrobic np model_enavulate
 
 def classify_data(data_subsets):
     for algorithm, parameters in CLASSIFICATION_ALGORITHMS_AND_PARAMETERS.items():
@@ -23,22 +24,10 @@ def estimate_data(data_subsets):
         algorithm_with_best_parameters = FindBestHyperparameters(
             data_subsets
         ).crossvalidate(algorithm, parameters)
-        Classification(data_subsets).evaluate(algorithm_with_best_parameters)
+        Estimation(data_subsets).evaluate(algorithm_with_best_parameters)
 
 
-class FindBestHyperparametersAbstract(abc.ABC):
-    @abc.abstractmethod
-    def crossvalidate(self, algorithm, parameters):
-        pass
-
-
-class EvaluateModelAbstract(abc.ABC):
-    @abc.abstractmethod
-    def evaluate(self, algorithm_with_best_parameters):
-        pass
-
-
-class FindBestHyperparameters(FindBestHyperparametersAbstract):
+class FindBestHyperparameters():
     def __init__(self, data_subsets):
         self.x_train_norm = data_subsets["x_train_norm"]
         self.y_train = data_subsets["y_train"]
@@ -78,13 +67,14 @@ class Estimation(EvaluateModelAbstract):
         estimator.fit(self.x_train_norm, self.y_train_norm)
         y_predicted_test = estimator.predict(self.x_test_norm)
         y_predicted_denormalized_test = denormalization(y_predicted_test, self.y_test)
+        print(y_predicted_denormalized_test)
         y_predicted_denormalized_rounded = []
         [
             y_predicted_denormalized_rounded.append(int(round(i, 0)))
             for i in y_predicted_denormalized_test
         ]
         calculate_metrics(self.y_test, y_predicted_denormalized_rounded)
-
+        print(self.y_test, y_predicted_denormalized_rounded)
 
 def denormalization(y_predicted: np.ndarray, y_actual: pd.Series) -> np.ndarray:
     y_predicted_denormalized = np.zeros(y_predicted.shape[0])
@@ -103,6 +93,7 @@ def calculate_metrics(y_actual, y_predicted):
         res = y_actual - y_predicted
         count = 0
         count_with_extended_interval = 0
+        # ukryc ponizej te funkcje, stworzyc nowa lub z podkreslinikem
         for i in res:
             if i == 0:
                 count += 1
@@ -113,6 +104,7 @@ def calculate_metrics(y_actual, y_predicted):
             f"accuracy for set is equal: {round(count / len(res), 4)}",
             f"accuracy with extended interval (-1 or 1): {round(count_with_extended_interval / len(res), 4)}",
         )
+
 
     check_MSE_accuracy(y_actual, y_predicted)
     accuracy_calculator(y_actual, y_predicted)

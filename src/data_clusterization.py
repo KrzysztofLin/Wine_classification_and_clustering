@@ -1,5 +1,3 @@
-import abc
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -8,7 +6,7 @@ from sklearn import metrics
 from sklearn.cluster import KMeans
 from sklearn.model_selection import ParameterGrid
 
-from data_visualization_v2 import (plot_3D_dispersion_graph,
+from data_visualization import (plot_3D_dispersion_graph,
                                    plot_dispersion_graphs,
                                    plot_kmeans_result_graph)
 from settings import (CLUSERIZATOR_WITH_PARAMETERS,
@@ -31,25 +29,7 @@ def cluster_data(data_subset):
     data_clusterization.save_results_for_cluster_analysis(cluster)
 
 
-class DataExplorationForClusterizationAbstract(abc.ABC):
-    @abc.abstractmethod
-    def check_dispersion_graphs(self):
-        pass
-
-    def check_silhouette_score(self):
-        pass
-
-
-class ClusterizationAbstract(abc.ABC):
-    @abc.abstractmethod
-    def cluster(self, algorithm_with_best_parameters):
-        pass
-
-    def save_result_for_cluster_analysis(self, cluster):
-        pass
-
-
-class DataExplorationForCluseriazation(DataExplorationForClusterizationAbstract):
+class DataExplorationForCluseriazation():
     def __init__(self, data_subsets: pd.DataFrame):
         self.x_train = data_subsets["x_train"]
         self.predictors = stats.zscore(np.log(self.x_train + 1))
@@ -89,7 +69,7 @@ class DataExplorationForCluseriazation(DataExplorationForClusterizationAbstract)
         plt.show()
 
 
-class Clusterization(ClusterizationAbstract):
+class Clusterization():
     def __init__(self, data_subsets: pd.DataFrame):
         self.x_train = data_subsets["x_train"]
         self.predictors = stats.zscore(np.log(self.x_train + 1))
