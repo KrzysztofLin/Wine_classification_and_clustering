@@ -6,7 +6,7 @@ The aim of the programme was to test (and select) various classification, estima
 
 # Setup 
 1. Git clone repository.
-2. To install all nessesary dependecies type 'poetry install' 
+2. To install all nessesary dependecies type 'poetry install' (if you already have poetry installed you should just type 'poetry update') 
 3. To run the program type 'poetry run python main_wine_file.py'
 
 # About dataset
