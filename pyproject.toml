@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "wine-classification-and-clustering"
+version = "0.1.0"
+description = ""
+authors = ["krzysztof <krzysztof.lingoo@gmail.com>"]
+readme = "README.md"
+packages = [{include = "wine_classification_and_clustering"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+sklearn = "^0.0"
+pandas = "^1.4.2"
+matplotlib = "^3.5.1"
+seaborn = "^0.11.2"
+black = "^22.3.0"
+numpy = "^1.22.3"
+flake8 = "^4.0.1"
+isort = "^5.10.1"
+mypy = "^0.950"
+stubs = "^1.0.0"
+pytest = "^7.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
