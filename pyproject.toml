@@ -18,6 +18,7 @@ flake8 = "^4.0.1"
 isort = "^5.10.1"
 mypy = "^0.950"
 stubs = "^1.0.0"
+pytest = "^7.1.2"
 
 
 [build-system]

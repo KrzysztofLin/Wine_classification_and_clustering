@@ -4,27 +4,14 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import GridSearchCV
-
-from settings import (CLASSIFICATION_ALGORITHMS_AND_PARAMETERS,
-                      ESTIMATION_ALGORITHMS_AND_PARAMETERS)
 from abstract import EvaluateModelAbstract
 
-### tutaj musze uproscic zrobic np model_enavulate
-
-def classify_data(data_subsets):
-    for algorithm, parameters in CLASSIFICATION_ALGORITHMS_AND_PARAMETERS.items():
+def evaluate_data(data_subsets, set_with_algorithm_parameters, estimator_class):
+    for algorithm, parameters in set_with_algorithm_parameters.items():
         algorithm_with_best_parameters = FindBestHyperparameters(
             data_subsets
         ).crossvalidate(algorithm, parameters)
-        Classification(data_subsets).evaluate(algorithm_with_best_parameters)
-
-
-def estimate_data(data_subsets):
-    for algorithm, parameters in ESTIMATION_ALGORITHMS_AND_PARAMETERS.items():
-        algorithm_with_best_parameters = FindBestHyperparameters(
-            data_subsets
-        ).crossvalidate(algorithm, parameters)
-        Estimation(data_subsets).evaluate(algorithm_with_best_parameters)
+        estimator_class.evaluate(algorithm_with_best_parameters)
 
 
 class FindBestHyperparameters():
@@ -64,21 +51,19 @@ class Estimation(EvaluateModelAbstract):
 
     def evaluate(self, algorithm_with_best_parameters) -> None:
         estimator = algorithm_with_best_parameters
-        estimator.fit(self.x_train_norm, self.y_train_norm)
+        estimator.fit(self.x_train_norm, self.y_train_norm.values.ravel())
         y_predicted_test = estimator.predict(self.x_test_norm)
         y_predicted_denormalized_test = denormalization(y_predicted_test, self.y_test)
-        print(y_predicted_denormalized_test)
         y_predicted_denormalized_rounded = []
         [
             y_predicted_denormalized_rounded.append(int(round(i, 0)))
             for i in y_predicted_denormalized_test
         ]
         calculate_metrics(self.y_test, y_predicted_denormalized_rounded)
-        print(self.y_test, y_predicted_denormalized_rounded)
 
 def denormalization(y_predicted: np.ndarray, y_actual: pd.Series) -> np.ndarray:
     y_predicted_denormalized = np.zeros(y_predicted.shape[0])
-    for i in range(len(y_predicted.shape[0])):
+    for i in range(y_predicted.shape[0]):
         y_predicted_denormalized[i] = (
             y_predicted[i] * (max(y_actual) - min(y_actual))
         ) + min(y_actual)

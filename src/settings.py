@@ -52,7 +52,6 @@ ESTIMATION_ALGORITHMS_AND_PARAMETERS = {
     }
 }
 
-
 CLUSERIZATOR_WITH_PARAMETERS = KMeans(
     n_clusters=6,
     init="random",
