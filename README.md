@@ -9,7 +9,6 @@ The aim of the programme was to test (and select) various classification, estima
 2. To install all nessesary dependecies type 'poetry install' 
 3. To run the program type 'poetry run python main_wine_file.py'
 
-
 # About dataset
 The file winequality-white.csv contains data on 4898 samples of Portuguese white wine. Each sample is described by 12 parameters, of which parameters 1-11 are assessed by objective physico-chemical tests and parameter 12 is a subjective assessment of wine quality made by experts.
 The collection was compiled as the result of measurements carried out from May 2004 to February 2007 on samples approved by the official certification association - CVRVV (association aiming to improve quality and promote Portuguese vino verde).
